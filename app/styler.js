@@ -5,7 +5,8 @@ var fs = require('fs'),
 
 
 var stylesString = css.toCSS('', {
-  'html': require('styles')
+  'html': require('styles'),
+  '#ask-page': require('ask/styles')
 });
 
 fs.writeFile(__dirname+'/public/stylesheet.css', stylesString, function(err) {
