@@ -25,6 +25,9 @@ ReactDOM.render(
       path: '/ask',
       component: require('ask')
     }, {
+      path: '/question/:id',
+      component: require('question')
+    }, {
       path: '/',
       component: rust.class({
         render: function() {

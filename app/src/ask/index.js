@@ -1,6 +1,7 @@
 'use strict';
 
 var rust = require('rust'),
+    api = require('lib/api'),
     _ = require('lodash');
 
 module.exports = rust.class({
@@ -45,9 +46,24 @@ module.exports = rust.class({
   },
 
   onSubmit: function(e) {
+    e.preventDefault();
     console.log('value', this.state.prompt);
     console.log('choices', this.state.choices);
-    e.preventDefault();
+    if (!this.state.prompt) {
+      alert('need prompt');
+      return;
+    } else if (this.state.choices.length < 2) {
+      alert('need at least 2 choices');
+      return;
+    }
+    api.post('/question', {
+      prompt: this.state.prompt,
+      choices: this.state.choices
+    }).then(function(newQuestion) {
+      console.log('new question', newQuestion);
+    });
+
+
   },
 
   render: function() {
@@ -70,6 +86,7 @@ module.exports = rust.class({
           },
           value: this.state.prompt,
           onInput: this.onInput,
+          onChange: this.onInput,
           placeholder: 'Prompt'
         }],
 
@@ -83,7 +100,8 @@ module.exports = rust.class({
             }, 'x'],
             ['input', {
               value: c,
-              onInput: ctx.editChoice.bind(ctx, i)
+              onInput: ctx.editChoice.bind(ctx, i),
+              onChange: ctx.editChoice.bind(ctx, i)
             }]
           ];
         })),

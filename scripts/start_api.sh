@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export NODE_PATH=./api:$NODE_PATH
+export NODE_PATH=$NODE_PATH:./api:./api/src
 
 node ./api/db/migrate "$@"
 
