@@ -39,7 +39,12 @@ module.exports = rust.class({
     return rust.o2([
       'div',
 
-      ['h1', 'The Council'],
+      ['img', {
+        style: {
+          height: '50px'
+        },
+        src: 'assets/council-light.png'
+      }],
 
       [Link, {to: '/ask'}, 'Ask'],
 
