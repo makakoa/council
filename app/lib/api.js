@@ -3,7 +3,8 @@
 var expose = require('util/exposer')(module.exports),
     http = require('util/http')();
 
-var config = require('config');
+var config = require('config'),
+    storage = require('lib/storage');
 
 // var defaultHeaders = {};
 var urlPrefix = config.apiUrl;
@@ -18,6 +19,22 @@ function headers() {
 }
 
 
+//
+expose(getCouncilToken);
+function getCouncilToken() {
+  return storage.get('council-token');
+}
+
+expose(hasToken);
+function hasToken() {
+  return !!getCouncilToken();
+}
+
+expose(setCouncilToken);
+function setCouncilToken(token) {
+  storage.set('council-token', token);
+}
+//
 
 expose(get);
 function get(path) {
