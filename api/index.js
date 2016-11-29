@@ -1,6 +1,9 @@
 'use strict';
 
-var express = require('express');
+var express = require('express'),
+    config = require('config');
+
+var db = require('db')(config.db);
 
 var app = express();
 
