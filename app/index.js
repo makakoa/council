@@ -9,11 +9,21 @@ var ReactDOM = require('react-dom'),
     notification = require('notification'),
     rust = require('rust');
 
+var tokenUtil = require('util/token'),
+    api = require('lib/api');
+
+if (!api.hasToken()) {
+  api.setCouncilToken(tokenUtil.councilTokenGenerator());
+}
+
 var questionActions = require('question/actions');
 var voteActions = require('vote/actions');
 notification.listenForNotifications();
 questionActions.loadQuestions();
 voteActions.loadVotes();
+
+
+
 
 ReactDOM.render(
   rust.element(Router.Router, {

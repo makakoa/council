@@ -61,15 +61,20 @@ module.exports = rust.class({
           onClick: ctx.vote.bind(ctx, q.id, i)
         }, c, ' [', counts[i], ']'];
       })),
-      ['button',
+      ['div',
         {
           'data-clipboard-text': window.location.origin + '/question/' + q.id,
           id: 'clipboard-' + q.id
         },
-        ['img', {
-          src:'https://clipboardjs.com/assets/images/clippy.svg',
-          width:'25px',
-          height:'25px'
+        ['i', {
+          className: 'fa fa-share-square-o',
+          title: 'copy question URL',
+          style: {
+            fontSize: '20px',
+            cursor: 'pointer',
+            padding: '4px',
+            'padding-bottom': '0px'
+          }
         }]
       ]
     ]);
