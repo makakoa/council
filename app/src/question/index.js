@@ -29,7 +29,7 @@ module.exports = rust.class({
 
     var ctx = this;
     return rust.o2([
-      'div',
+      'question',
       {
         class: isOpen ? 'open' : 'closed'
       },
