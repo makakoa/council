@@ -6,11 +6,12 @@ window.react = react;
 var ReactDOM = require('react-dom'),
     Router = require('react-router'),
     Link = Router.Link,
+    hist = require('lib/history'),
     rust = require('rust');
 
 ReactDOM.render(
   rust.element(Router.Router, {
-    history: Router.browserHistory,
+    history: hist,
     routes: [{
       path: '/about',
       component: rust.class({

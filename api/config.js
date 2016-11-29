@@ -10,6 +10,13 @@ module.exports = {
     poolSize: 10,
     enableStore: true,
     debug: true
+  },
+
+  pubnub: {
+    publishKey: $.PUBNUB_PUBLISH
+      || 'pub-c-b5fd09fd-b4fb-43ca-abbf-dd56856be520',
+    subscribeKey: $.PUBNUB_SUBSCRIBE
+      || 'sub-c-2b056f46-b5db-11e6-b6b9-0619f8945a4f'
   }
 
 };

@@ -2,6 +2,7 @@
 
 var rust = require('rust'),
     api = require('lib/api'),
+    hist = require('lib/history'),
     _ = require('lodash');
 
 module.exports = rust.class({
@@ -60,7 +61,7 @@ module.exports = rust.class({
       prompt: this.state.prompt,
       choices: this.state.choices
     }).then(function(newQuestion) {
-      console.log('new question', newQuestion);
+      hist.push('/question/' + newQuestion.id);
     });
 
 
