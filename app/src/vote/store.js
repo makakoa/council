@@ -30,12 +30,23 @@ var store = Flux.createStore({
   },
 
   collect: function(data) {
-    store.cache = _.unionBy(store.cache, data);
+    store.cache = _.unionBy(store.cache, data, function(vote) {
+      return [
+        vote.questionId,
+        vote.choiceIndex,
+        vote.created
+      ].join(':');
+    });
     store.index();
   }
 }, function(payload) {
   switch (payload.actionType) {
-  case 'VOTE':
+  // case 'VOTE':
+  //   store.add(payload.data);
+  //   store.emitChange();
+  //   break;
+
+  case 'NEW_VOTE':
     store.add(payload.data);
     store.emitChange();
     break;

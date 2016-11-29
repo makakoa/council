@@ -10,9 +10,10 @@ var ReactDOM = require('react-dom'),
     rust = require('rust');
 
 var questionActions = require('question/actions');
+var voteActions = require('vote/actions');
 notification.listenForNotifications();
 questionActions.loadQuestions();
-questionActions.loadVotes();
+voteActions.loadVotes();
 
 ReactDOM.render(
   rust.element(Router.Router, {

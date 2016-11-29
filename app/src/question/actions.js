@@ -19,34 +19,10 @@ module.exports = Flux.createActions({
     };
   },
 
-  vote: function(questionId, choiceIndex) {
-    var call = api.post('/question/' + questionId + '/vote', {
-      choiceIndex: choiceIndex
-    });
-
-    return {
-      actionType: 'VOTE',
-      data: {
-        questionId: questionId,
-        choiceIndex: choiceIndex
-      },
-      call: call
-    };
-  },
-
   addQuestion: function(data) {
     return {
       actionType: 'NEW_QUESTION',
       data: data
-    };
-  },
-
-  loadVotes: function() {
-    var call = api.get('/vote');
-
-    return {
-      actionType: 'LOAD_VOTES',
-      call: call
     };
   },
 

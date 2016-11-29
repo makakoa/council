@@ -5,12 +5,12 @@ var rust = require('rust'),
     timeUtil = require('util/time'),
     Link = require('react-router').Link;
 
-var questionActions = require('question/actions');
+var voteActions = require('vote/actions');
 var questionStore = require('question/store');
 var voteStore = require('vote/store');
 
 module.exports = rust.class({
-  mixins: [questionStore.mixin],
+  mixins: [questionStore.mixin, voteStore.mixin],
 
   getInitialState: function() {
     return {
@@ -27,7 +27,7 @@ module.exports = rust.class({
   },
 
   vote: function(questionId, choiceIndex) {
-    questionActions.vote(questionId, choiceIndex);
+    voteActions.vote(questionId, choiceIndex);
   },
 
   render: function() {
@@ -36,7 +36,9 @@ module.exports = rust.class({
 
     return rust.o2([
       'div',
-      ['h1', 'Home'],
+
+      ['h1', 'The Council'],
+
       [Link, {to: '/ask'}, 'Ask'],
 
       rust.list('questions', _.map(this.state.questions, function(q) {
@@ -53,16 +55,22 @@ module.exports = rust.class({
         ) > (timeUtil.second * 30)
           ? [
             'div',
-            q.prompt,
+            ['h3', q.prompt],
             rust.list('choices', _.map(q.choices, function(c, i) {
-              return ['button', {
+              return ['div', {
+                style: {
+                  cursor: 'pointer',
+                  border: '1px solid',
+                  padding: '4px',
+                  margin: '4px'
+                },
                 onClick: ctx.vote.bind(ctx, q.id, i)
               }, c, ' [', counts[i], ']'];
             }))
           ]
         : [
           'div',
-          'Prompt: ',
+          ['h3', 'Prompt: '],
           q.prompt,
           rust.list('choices', _.map(q.choices, function(c, i) {
             return ['div', c, ' [', counts[i], ']'];

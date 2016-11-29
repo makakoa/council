@@ -34,6 +34,7 @@ function listenForNotifications() {
 }
 
 var questionActions = require('question/actions');
+var voteActions = require('vote/actions');
 
 function handleNotification(payload) {
   console.log('Notification received ', payload);
@@ -45,5 +46,11 @@ function handleNotification(payload) {
     notify('New question!');
     questionActions.addQuestion(message.data);
     break;
+
+  case 'NEW_VOTE':
+    notify('New Vote!');
+    voteActions.addVote(message.data);
+    break;
+
   }
 }

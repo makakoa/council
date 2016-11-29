@@ -24,6 +24,10 @@ app.post('/question/:questionId/vote', function(req, res) {
     choiceIndex: req.body.choiceIndex
   }).then(function(vote) {
     res.send(vote);
+    pubsub.publish('/all', {
+      message: 'NEW_VOTE',
+      data: vote
+    });
   });
 });
 
