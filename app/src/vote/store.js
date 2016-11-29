@@ -16,7 +16,7 @@ var store = Flux.createStore({
   },
 
   getByQuestionId: function(id) {
-    return id ? store.indexCache[id] : store.indexedCache;
+    return id ? store.indexedCache[id] : store.indexedCache;
   },
 
   add: function(data) {

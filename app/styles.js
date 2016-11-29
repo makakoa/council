@@ -6,5 +6,7 @@ module.exports = {
     padding: 0
   },
 
+  padding: '20px',
+
   'font-family': 'Oxygen, sans-serif'
 };

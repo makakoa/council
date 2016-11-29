@@ -33,7 +33,7 @@ ReactDOM.render(
       component: require('ask')
     }, {
       path: '/question/:id',
-      component: require('question')
+      component: require('question/page')
     }, {
       path: '/',
       component: require('home')
