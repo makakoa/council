@@ -2,6 +2,7 @@
 
 var rust = require('rust'),
     _ = require('lodash'),
+    top = require('top'),
     question = require('question'),
     Link = require('react-router').Link;
 
@@ -39,14 +40,13 @@ module.exports = rust.class({
     return rust.o2([
       'div',
 
-      ['img', {
-        style: {
-          height: '50px'
-        },
-        src: 'assets/council-light.png'
+      [top, {
+        middle: ['img', {
+          style: {height: '50px'},
+          src: 'assets/council-light.png'
+        }],
+        right: [Link, {to: '/ask'}, 'Ask']
       }],
-
-      [Link, {to: '/ask'}, 'Ask'],
 
       rust.list('questions', _.map(this.state.questions, this.questionItem))
     ]);

@@ -42,9 +42,7 @@ module.exports = rust.class({
     var ctx = this;
     return rust.o2([
       'question',
-      {
-        class: isOpen ? 'open' : 'closed'
-      },
+      {className: isOpen ? 'open' : 'closed'},
 
       [Link, {
         to: '/question/' + q.id
@@ -52,30 +50,20 @@ module.exports = rust.class({
 
       rust.list('choices', _.map(q.choices, function(c, i) {
         return ['div', {
-          style: {
-            cursor: 'pointer',
-            border: '1px solid',
-            padding: '4px',
-            margin: '4px'
-          },
+          className: 'choice',
           onClick: ctx.vote.bind(ctx, q.id, i)
         }, c, ' [', counts[i], ']'];
       })),
       ['div',
-        {
-          'data-clipboard-text': window.location.origin + '/question/' + q.id,
-          id: 'clipboard-' + q.id
-        },
-        ['i', {
-          className: 'fa fa-share-square-o',
-          title: 'copy question URL',
-          style: {
-            fontSize: '20px',
-            cursor: 'pointer',
-            padding: '4px',
-            'padding-bottom': '0px'
-          }
-        }]
+       {
+         className: 'share-button',
+         'data-clipboard-text': window.location.origin + '/question/' + q.id,
+         id: 'clipboard-' + q.id
+       },
+       ['i', {
+         className: 'fa fa-share-square-o',
+         title: 'copy question URL'
+       }]
       ]
     ]);
   }

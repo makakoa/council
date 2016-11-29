@@ -1,6 +1,7 @@
 'use strict';
 
 var rust = require('rust'),
+    top = require('top'),
     Link = require('react-router').Link,
     question = require('question');
 
@@ -31,11 +32,14 @@ module.exports = rust.class({
     return rust.o2([
       'div',
 
-      [Link, {
-        to: '/'
-      }, 'Home'],
+      [top, {
+        left: [Link, {to: '/'}, 'Home'],
 
-      ['h1', 'The Council'],
+        middle: ['img', {
+          style: {height: '50px'},
+          src: 'assets/council-light.png'
+        }]
+      }],
 
       this.state.question && this.state.votes
       ? [question, {
