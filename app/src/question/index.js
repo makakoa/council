@@ -3,13 +3,25 @@
 var rust = require('rust'),
     _ = require('lodash'),
     Link = require('react-router').Link,
-    timeUtil = require('util/time');
+    timeUtil = require('util/time'),
+    Clipboard = require('clipboard');
 
 var voteActions = require('vote/actions');
 
 var voteDuration = timeUtil.second * 30;
 
 module.exports = rust.class({
+
+  componentDidMount: function() {
+    this.clipboard = new Clipboard('.clipboard');
+    // this.clipboard.on('success', function(e) {
+    //   console.log('WINNING: ' + e);
+    // });
+  },
+
+  componentWillUnmount: function() {
+    this.clipboard.destroy();
+  },
 
   vote: function(questionId, choiceIndex) {
     voteActions.vote(questionId, choiceIndex);
@@ -48,7 +60,18 @@ module.exports = rust.class({
           },
           onClick: ctx.vote.bind(ctx, q.id, i)
         }, c, ' [', counts[i], ']'];
-      }))
+      })),
+      ['button',
+        {
+          'data-clipboard-text': window.location.origin+'/question/' + q.id,
+          className: 'clipboard'
+        },
+        ['img', {
+          src:'https://clipboardjs.com/assets/images/clippy.svg',
+          width:'25px',
+          height:'25px'
+        }]
+      ]
     ]);
   }
 });
