@@ -9,9 +9,10 @@ var ReactDOM = require('react-dom'),
     notification = require('notification'),
     rust = require('rust');
 
-notification.listenForNotifications();
-
 var questionActions = require('question/actions');
+notification.listenForNotifications();
+questionActions.loadQuestions();
+questionActions.loadVotes();
 
 ReactDOM.render(
   rust.element(Router.Router, {
@@ -34,9 +35,6 @@ ReactDOM.render(
       component: require('question')
     }, {
       path: '/',
-      onEnter: function() {
-        questionActions.loadQuestions();
-      },
       component: require('home')
     }, {
       path: '*',

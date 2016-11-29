@@ -9,8 +9,7 @@ module.exports = Flux.createActions({
     var call = api.post('/question', question);
 
     call.tap(function(newQuestion) {
-      hist.push('/');
-      // hist.push('/question/' + newQuestion.id);
+      hist.push('/question/' + newQuestion.id);
     });
 
     return {
@@ -20,10 +19,34 @@ module.exports = Flux.createActions({
     };
   },
 
+  vote: function(questionId, choiceIndex) {
+    var call = api.post('/question/' + questionId + '/vote', {
+      choiceIndex: choiceIndex
+    });
+
+    return {
+      actionType: 'VOTE',
+      data: {
+        questionId: questionId,
+        choiceIndex: choiceIndex
+      },
+      call: call
+    };
+  },
+
   addQuestion: function(data) {
     return {
       actionType: 'NEW_QUESTION',
       data: data
+    };
+  },
+
+  loadVotes: function() {
+    var call = api.get('/vote');
+
+    return {
+      actionType: 'LOAD_VOTES',
+      call: call
     };
   },
 

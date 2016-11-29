@@ -7,7 +7,8 @@ var app = express();
 var db = require('db')(config.db);
 
 var store = {
-  question: db.store('question.question')
+  question: db.store('question.question'),
+  vote: db.store('question.vote')
 };
 
 var bodyParser = require('body-parser');
@@ -17,8 +18,16 @@ app.use(require('middleware/cors'));
 
 var pubsub = require('service/pubsub')();
 
+app.post('/question/:questionId/vote', function(req, res) {
+  store.vote.insert({
+    questionId: req.params.questionId,
+    choiceIndex: req.body.choiceIndex
+  }).then(function(vote) {
+    res.send(vote);
+  });
+});
+
 app.post('/question', function(req, res) {
-  console.log('reqbody', req.body);
   store.question.insert({
     prompt: req.body.prompt,
     choices: req.body.choices
@@ -35,6 +44,13 @@ app.get('/question', function(req, res) {
   req;
   store.question.find().then(function(questions) {
     res.send(questions);
+  });
+});
+
+app.get('/vote', function(req, res) {
+  req;
+  store.vote.find().then(function(votes) {
+    res.send(votes);
   });
 });
 
