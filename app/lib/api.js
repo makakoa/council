@@ -15,11 +15,10 @@ function completeUrl(url) {
 
 function headers() {
   return {
+    'council-token': getCouncilToken()
   };
 }
 
-
-//
 expose(getCouncilToken);
 function getCouncilToken() {
   return storage.get('council-token');
@@ -34,7 +33,6 @@ expose(setCouncilToken);
 function setCouncilToken(token) {
   storage.set('council-token', token);
 }
-//
 
 expose(get);
 function get(path) {

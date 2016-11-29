@@ -21,7 +21,8 @@ var pubsub = require('service/pubsub')();
 app.post('/question/:questionId/vote', function(req, res) {
   store.vote.insert({
     questionId: req.params.questionId,
-    choiceIndex: req.body.choiceIndex
+    choiceIndex: req.body.choiceIndex,
+    councilToken: req.headers['council-token']
   }).then(function(vote) {
     res.send(vote);
     pubsub.publish('/all', {
@@ -34,7 +35,8 @@ app.post('/question/:questionId/vote', function(req, res) {
 app.post('/question', function(req, res) {
   store.question.insert({
     prompt: req.body.prompt,
-    choices: req.body.choices
+    choices: req.body.choices,
+    councilToken: req.headers['council-token']
   }).then(function(newQuestion) {
     res.send(newQuestion);
     pubsub.publish('/all', {
