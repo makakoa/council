@@ -2,6 +2,7 @@
 
 var rust = require('rust'),
     Link = require('react-router').Link,
+    top = require('top'),
     _ = require('lodash');
 
 var questionActions = require('question/actions');
@@ -72,12 +73,14 @@ module.exports = rust.class({
 
     return rust.o2([
       'div',
+      {id: 'ask-page'},
 
-      [Link, {
-        to: '/'
-      }, 'Home'],
+      [top, {
+        left: [Link, {to: '/'}, ['i', {className: 'fa fa-chevron-left'}]],
+        middle: ['h1', 'Ask']
+      }],
 
-      ['h1', 'Ask'],
+      ['br'],
 
       [
         'form',
@@ -86,45 +89,42 @@ module.exports = rust.class({
         },
 
         ['input', {
-          style: {
-            display: 'block'
-          },
+          id: 'prompt',
           value: this.state.prompt,
           onInput: this.onInput,
           onChange: this.onInput,
-          placeholder: 'Prompt'
+          placeholder: 'Present your situation'
         }],
 
         ['br'],
         rust.list('choices', _.map(this.state.choices, function(c, i) {
           return [
             'div',
-            ['button', {
-              type: 'button',
-              onClick: ctx.removeChoice.bind(ctx, i)
-            }, 'x'],
+            {id: 'choice'},
             ['input', {
+              placeholder: 'Option',
               value: c,
               onInput: ctx.editChoice.bind(ctx, i),
               onChange: ctx.editChoice.bind(ctx, i)
-            }]
+            }],
+            ['button', {
+              className: 'remove',
+              type: 'button',
+              onClick: ctx.removeChoice.bind(ctx, i)
+            }, ['i', {className: 'fa fa-trash'}]]
           ];
         })),
 
         ['br'],
         ['button', {
-          style: {
-            display: 'block'
-          },
+          id: 'add',
           type: 'button',
           onClick: this.addChoice
-        }, 'Add'],
+        }, ['i', {className: 'fa fa-plus'}], ' Add'],
 
         ['br'],
         ['button', {
-          style: {
-            display: 'block'
-          },
+          id: 'submit',
           type: 'submit',
           onClick: this.onSubmit
         }, 'Ask']
