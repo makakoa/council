@@ -15,11 +15,9 @@ ReactDOM.render(
       path: '/about',
       component: rust.class({
         render: function() {
-          var Ask = require('ask');
           return rust.o2([
             'div',
-            [Ask],
-            [Ask]
+            'The Council'
           ]);
         }
       })

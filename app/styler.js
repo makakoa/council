@@ -3,9 +3,10 @@
 var fs = require('fs'),
     css = require('css');
 
-var stylesString = [
-  css.toCSS('html', require('styles'))
-].join('');
+
+var stylesString = css.toCSS('', {
+  'html': require('styles')
+});
 
 fs.writeFile(__dirname+'/public/stylesheet.css', stylesString, function(err) {
   if (err) console.error('Error writing styles', err);
