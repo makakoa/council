@@ -13,7 +13,7 @@ var voteDuration = timeUtil.second * 30;
 module.exports = rust.class({
 
   componentDidMount: function() {
-    this.clipboard = new Clipboard('.clipboard');
+    this.clipboard = new Clipboard('#clipboard-' + this.props.question.id);
     // this.clipboard.on('success', function(e) {
     //   console.log('WINNING: ' + e);
     // });
@@ -63,8 +63,8 @@ module.exports = rust.class({
       })),
       ['button',
         {
-          'data-clipboard-text': window.location.origin+'/question/' + q.id,
-          className: 'clipboard'
+          'data-clipboard-text': window.location.origin + '/question/' + q.id,
+          id: 'clipboard-' + q.id
         },
         ['img', {
           src:'https://clipboardjs.com/assets/images/clippy.svg',
