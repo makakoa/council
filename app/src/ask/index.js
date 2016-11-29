@@ -1,9 +1,10 @@
 'use strict';
 
 var rust = require('rust'),
-    api = require('lib/api'),
-    hist = require('lib/history'),
+    Link = require('react-router').Link,
     _ = require('lodash');
+
+var questionActions = require('question/actions');
 
 module.exports = rust.class({
   getInitialState: function() {
@@ -50,6 +51,7 @@ module.exports = rust.class({
     e.preventDefault();
     console.log('value', this.state.prompt);
     console.log('choices', this.state.choices);
+
     if (!this.state.prompt) {
       alert('need prompt');
       return;
@@ -57,14 +59,11 @@ module.exports = rust.class({
       alert('need at least 2 choices');
       return;
     }
-    api.post('/question', {
+
+    questionActions.ask({
       prompt: this.state.prompt,
       choices: this.state.choices
-    }).then(function(newQuestion) {
-      hist.push('/question/' + newQuestion.id);
     });
-
-
   },
 
   render: function() {
@@ -73,6 +72,11 @@ module.exports = rust.class({
 
     return rust.o2([
       'div',
+
+      [Link, {
+        to: '/'
+      }, 'Home'],
+
       ['h1', 'Ask'],
 
       [

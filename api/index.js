@@ -15,6 +15,8 @@ app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 app.use(require('middleware/cors'));
 
+var pubsub = require('service/pubsub')();
+
 app.post('/question', function(req, res) {
   console.log('reqbody', req.body);
   store.question.insert({
@@ -22,10 +24,14 @@ app.post('/question', function(req, res) {
     choices: req.body.choices
   }).then(function(newQuestion) {
     res.send(newQuestion);
+    pubsub.publish('/all', {
+      message: 'NEW_QUESTION',
+      data: newQuestion
+    });
   });
 });
 
-app.get('/questions', function(req, res) {
+app.get('/question', function(req, res) {
   req;
   store.question.find().then(function(questions) {
     res.send(questions);

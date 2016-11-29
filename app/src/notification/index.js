@@ -29,11 +29,21 @@ pubsub.onMessage(handleNotification);
 
 expose(listenForNotifications);
 function listenForNotifications() {
+  console.log('listening to /all');
   pubsub.subscribe('/all');
 }
+
+var questionActions = require('question/actions');
 
 function handleNotification(payload) {
   console.log('Notification received ', payload);
 
   var message = payload.message;
+
+  switch (message.message) {
+  case 'NEW_QUESTION':
+    notify('New question!');
+    questionActions.addQuestion(message.data);
+    break;
+  }
 }

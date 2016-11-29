@@ -5,9 +5,13 @@ window.react = react;
 
 var ReactDOM = require('react-dom'),
     Router = require('react-router'),
-    Link = Router.Link,
     hist = require('lib/history'),
+    notification = require('notification'),
     rust = require('rust');
+
+notification.listenForNotifications();
+
+var questionActions = require('question/actions');
 
 ReactDOM.render(
   rust.element(Router.Router, {
@@ -30,18 +34,15 @@ ReactDOM.render(
       component: require('question')
     }, {
       path: '/',
+      onEnter: function() {
+        questionActions.loadQuestions();
+      },
+      component: require('home')
+    }, {
+      path: '*',
       component: rust.class({
         render: function() {
-          return rust.element(
-            'div',
-            null,
-            'Home',
-            rust.element(
-              Link,
-              {to: '/ask'},
-              'Ask'
-            )
-          );
+          return rust.element('div', null, 'Not found');
         }
       })
     }]
