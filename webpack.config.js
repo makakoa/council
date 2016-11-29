@@ -61,6 +61,7 @@ module.exports = {
     modulesDirectories: [
       'node_modules',
       'app',
+      'app/src',
       'lib'
     ]
   },
