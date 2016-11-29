@@ -6,6 +6,7 @@ var fs = require('fs'),
 
 var stylesString = css.toCSS('', {
   'html': require('styles'),
+  'question': require('question/styles'),
   '#ask-page': require('ask/styles')
 });
 

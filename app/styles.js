@@ -56,26 +56,13 @@ module.exports = {
     outline: 'none'
   },
 
-  // question styles
-  'question': {
-    display: 'block',
-    'border-radius': '4px',
-    padding: '4px',
-    margin: '4px',
-    'background-color': color.font,
-
-    a: {
-      color: color.background
-    },
-    color: color.background
-  },
-
   // top styles
   '#top': {
     display: 'flex',
     'justify-content': 'space-between',
     'align-items': 'center',
     'left, right': {
+      'text-align': 'center',
       width: '100px'
     }
   }
