@@ -14,8 +14,8 @@ module.exports = rust.class({
     return rust.element(transitionGroup, {
       component: 'app-container',
       transitionName: transitionType || 'skip',
-      transitionEnterTimeout: transitionType ? 500 : 10,
-      transitionLeaveTimeout: transitionType ? 500 : 10
+      transitionEnterTimeout: transitionType ? 300 : 10,
+      transitionLeaveTimeout: transitionType ? 300 : 10
     }, React.Children.map(this.props.children, function(child) {
       return React.cloneElement(child, _.extend({key: path}, ctx.props));
     }));

@@ -1,6 +1,7 @@
 'use strict';
 
 var express = require('express'),
+    timeUtil = require('util/time'),
     Promise = require('util/promise'),
     _ = require('lodash'),
     config = require('config');
@@ -79,6 +80,10 @@ app.post('/question', function(req, res) {
       message: 'NEW_QUESTION',
       data: newQuestion
     });
+
+    setTimeout(function() {
+      checkQuestion(newQuestion);
+    }, timeUtil.second * 29);
   });
 });
 
@@ -95,6 +100,25 @@ app.get('/vote', function(req, res) {
     res.send(votes);
   });
 });
+
+function checkQuestion(question) {
+  store.vote.find({
+    questionId: question.id
+  }).then(function(votes) {
+    if (votes.length) return;
+    var robotPick = Math.floor(Math.random() * question.choices.length);
+    store.vote.insert({
+      questionId: question.id,
+      choiceIndex: robotPick,
+      councilToken: 'ROBOT'
+    }).then(function(vote) {
+      pubsub.publish('/all', {
+        message: 'NEW_VOTE',
+        data: vote
+      });
+    });
+  });
+}
 
 var port = process.env.PORT || 3000;
 app.listen(port, function() {
