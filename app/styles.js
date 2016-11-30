@@ -2,7 +2,7 @@
 
 var color = require('ui/color');
 
-var pageTransition = '500ms';
+var pageTransition = '300ms';
 
 module.exports = {
   '*': {

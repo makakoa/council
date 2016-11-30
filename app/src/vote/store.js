@@ -24,6 +24,14 @@ var store = Flux.createStore({
     store.index();
   },
 
+  update: function(selector, update) {
+    var item = _.find(store.cache, selector);
+    if (item) {
+      store.cache[_.indexOf(store.cache, item)] = _.extend({}, item, update);
+    }
+    store.index();
+  },
+
   replace: function(data) {
     store.cache = data;
     store.index();
@@ -33,8 +41,7 @@ var store = Flux.createStore({
     store.cache = _.unionBy(store.cache, data, function(vote) {
       return [
         vote.questionId,
-        vote.choiceIndex,
-        vote.created
+        vote.councilToken || vote.created
       ].join(':');
     });
     store.index();
@@ -48,6 +55,16 @@ var store = Flux.createStore({
 
   case 'NEW_VOTE':
     store.add(payload.data);
+    store.emitChange();
+    break;
+
+  case 'CHANGE_VOTE':
+    store.update({
+      questionId: payload.data.questionId,
+      councilToken: payload.data.councilToken
+    }, {
+      choiceIndex: payload.data.choiceIndex
+    });
     store.emitChange();
     break;
 

@@ -41,7 +41,7 @@ module.exports = rust.class({
         }]
       }],
 
-      this.state.question && this.state.votes
+      this.state.question
       ? [question, {
         question: this.state.question,
         votes: this.state.votes || []

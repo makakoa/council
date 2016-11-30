@@ -21,6 +21,10 @@ module.exports = {
     margin: '4px'
   },
 
+  '.favored': {
+    color: color.green
+  },
+
   '.share-button': {
     display: 'inline-block',
     'margin-right': 'auto',
