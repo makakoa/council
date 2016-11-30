@@ -39,14 +39,18 @@ ReactDOM.render(
         }
       })
     }, {
-      path: '/ask',
-      component: require('ask')
-    }, {
-      path: '/question/:id',
-      component: require('question/page')
-    }, {
       path: '/',
-      component: require('home')
+      component: require('in_app'),
+      indexRoute: {
+        component: require('home')
+      },
+      childRoutes: [{
+        path: '/ask',
+        component: require('ask')
+      }, {
+        path: '/question/:id',
+        component: require('question/page')
+      }]
     }, {
       path: '*',
       component: rust.class({
