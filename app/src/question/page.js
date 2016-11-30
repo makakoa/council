@@ -33,7 +33,7 @@ module.exports = rust.class({
       'div',
 
       [top, {
-        left: [Link, {to: '/'}, 'Home'],
+        left: [Link, {to: '/'}, ['i', {className: 'fa fa-chevron-left'}]],
 
         middle: ['img', {
           style: {height: '50px'},

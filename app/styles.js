@@ -2,6 +2,8 @@
 
 var color = require('ui/color');
 
+var pageTransition = '300ms';
+
 module.exports = {
   '*': {
     margin: 0,
@@ -13,7 +15,14 @@ module.exports = {
     height: '100vh',
     'max-width': '70ch',
     'margin': '0 auto',
-    padding: '20px'
+    padding: '20px',
+
+    'app-container': {
+      display: 'block',
+      width: '100%',
+      height: '100%',
+      position: 'relative'
+    }
   },
 
   'font-family': 'Oxygen, sans-serif',
@@ -65,6 +74,50 @@ module.exports = {
       'text-align': 'center',
       width: '100px'
     }
+  },
+
+  '.LEFT-enter': {
+    transform: 'translateX(100vw)',
+    transition: pageTransition
+  },
+  '.LEFT-enter-active': {
+    transform: 'translateX(0)'
+  },
+
+  '.LEFT-leave': {
+    display: 'block',
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    left: 0,
+    bottom: 0,
+    transform: 'translateX(0)',
+    transition: pageTransition
+  },
+  '.LEFT-leave.LEFT-leave-active': {
+    transform: 'translateX(-100vw)'
+  },
+
+  '.RIGHT-enter': {
+    transform: 'translateX(-100vw)',
+    transition: pageTransition
+  },
+  '.RIGHT-enter-active': {
+    transform: 'translateX(0)'
+  },
+
+  '.RIGHT-leave': {
+    display: 'block',
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    left: 0,
+    bottom: 0,
+    transform: 'translateX(0)',
+    transition: pageTransition
+  },
+  '.RIGHT-leave-active': {
+    transform: 'translateX(100vw)'
   }
 
 };
