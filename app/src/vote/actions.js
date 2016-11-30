@@ -20,6 +20,13 @@ module.exports = Flux.createActions({
     };
   },
 
+  changeVote: function(data) {
+    return {
+      actionType: 'CHANGE_VOTE',
+      data: data
+    };
+  },
+
   addVote: function(data) {
     return {
       actionType: 'NEW_VOTE',

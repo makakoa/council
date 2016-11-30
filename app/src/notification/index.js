@@ -48,9 +48,11 @@ function handleNotification(payload) {
     break;
 
   case 'NEW_VOTE':
-    notify('New Vote!');
     voteActions.addVote(message.data);
     break;
 
+  case 'CHANGE_VOTE':
+    voteActions.changeVote(message.data);
+    break;
   }
 }
