@@ -37,6 +37,7 @@ module.exports = rust.class({
 
   render: function() {
 
+
     return rust.o2([
       'div',
 
@@ -48,7 +49,9 @@ module.exports = rust.class({
         right: [Link, {to: '/ask'}, 'Ask']
       }],
 
-      rust.list('questions', _.map(this.state.questions, this.questionItem))
+      rust.list('questions',
+      _.map(_.sortBy(this.state.questions, 'created').reverse(),
+      this.questionItem))
     ]);
   }
 });
