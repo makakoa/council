@@ -66,7 +66,8 @@ module.exports = rust.class({
         lateTotal++;
       }
     });
-    var highest = Math.max.apply(null, counts) || 1;
+    var highest = Math.max.apply(null, counts);
+    var highestLate = Math.max.apply(null, late);
 
     var isOpen = timeUtil.timeBetween(q.created, new Date()) < voteDuration;
 
@@ -102,7 +103,18 @@ module.exports = rust.class({
             ' + ', late[i], ' late (',
             Math.floor((counts[i] + late[i]) / (total + lateTotal) * 100),
             '% overall)'
-          ] : null
+          ] : null,
+          [
+            'div',
+            [
+              'div',
+              {style: {
+                backgroundColor:'#abcdef',
+                width: Math.floor((counts[i] + late[i]) / (highest + highestLate) * 100) +'%',
+                height:'9px'
+              }}
+            ]
+          ]
         ];
       })),
 
