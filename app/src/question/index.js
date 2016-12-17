@@ -115,12 +115,12 @@ module.exports = rust.class({
             [
               'div',
               {style: {
-                backgroundColor:'#a98765',
+                backgroundColor:'#89abcd',
                 width: Math.floor((late[i]) / (highest + highestLate) * 100) +'%',
                 height:'9px',
                 display:'inline-block'
               }}
-            ],
+            ]
           ]
         ];
       })),
