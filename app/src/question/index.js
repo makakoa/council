@@ -17,9 +17,6 @@ module.exports = rust.class({
 
   componentDidMount: function() {
     this.clipboard = new Clipboard('#clipboard-' + this.props.question.id);
-    // this.clipboard.on('success', function(e) {
-    //   console.log('WINNING: ' + e);
-    // });
   },
 
   componentWillUnmount: function() {
@@ -109,11 +106,21 @@ module.exports = rust.class({
             [
               'div',
               {style: {
-                backgroundColor:'#abcdef',
-                width: Math.floor((counts[i] + late[i]) / (highest + highestLate) * 100) +'%',
-                height:'9px'
+                backgroundColor:'#56789a',
+                width: Math.floor((counts[i]) / (highest + highestLate) * 100) +'%',
+                height:'9px',
+                display:'inline-block'
               }}
-            ]
+            ],
+            [
+              'div',
+              {style: {
+                backgroundColor:'#a98765',
+                width: Math.floor((late[i]) / (highest + highestLate) * 100) +'%',
+                height:'9px',
+                display:'inline-block'
+              }}
+            ],
           ]
         ];
       })),
