@@ -25,6 +25,26 @@ module.exports = {
     color: color.green
   },
 
+  '.vote-tally-bar': {
+    height:'9px',
+    'background-color':'#56789a'
+  },
+
+  '.favored-vote-tally': {
+    height:'9px',
+    'background-color':'#287856'
+  },
+
+  '.latevote-tally-bar': {
+    height:'9px',
+    'background-color':'#89abcd'
+  },
+
+  '.favored-latevote-tally': {
+    height:'9px',
+    'background-color':'#38cc70'
+  },
+
   '.share-button': {
     display: 'inline-block',
     'margin-right': 'auto',

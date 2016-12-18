@@ -105,20 +105,24 @@ module.exports = rust.class({
             'div',
             [
               'div',
-              {style: {
-                backgroundColor:'#56789a',
-                width: Math.floor((counts[i]) / (highest + highestLate) * 100) +'%',
-                height:'9px',
-                display:'inline-block'
+              {
+                className: [ 'vote-tally-bar',
+                    highest === counts[i] ? 'favored-vote-tally' : ''
+                  ].join(' '),
+                style: {
+                  width: Math.floor((counts[i]) / (highest + highestLate) * 100) +'%',
+                  display:'inline-block'
               }}
             ],
             [
               'div',
-              {style: {
-                backgroundColor:'#89abcd',
-                width: Math.floor((late[i]) / (highest + highestLate) * 100) +'%',
-                height:'9px',
-                display:'inline-block'
+              {
+                className: [ 'latevote-tally-bar',
+                    highest === counts[i] ? 'favored-latevote-tally' : ''
+                  ].join(' '),
+                style: {
+                  width: Math.floor((late[i]) / (highest + highestLate) * 100) +'%',
+                  display:'inline-block'
               }}
             ]
           ]
