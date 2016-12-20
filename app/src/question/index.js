@@ -118,7 +118,7 @@ module.exports = rust.class({
               'div',
               {
                 className: [ 'latevote-tally-bar',
-                    highest === counts[i] ? 'favored-latevote-tally' : ''
+                    highestLate === late[i] ? 'favored-latevote-tally' : ''
                   ].join(' '),
                 style: {
                   width: Math.floor((late[i]) / (highest + highestLate) * 100) +'%',
