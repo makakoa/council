@@ -50,21 +50,26 @@ module.exports = rust.class({
 
     var counts = Array(q.choices.length);
     var late = Array(q.choices.length);
+    var overallVotes = Array(q.choices.length);
     counts.fill(0);
     late.fill(0);
+    overallVotes.fill(0);
     var total = 0;
     var lateTotal = 0;
     _.each(this.props.votes, function(v) {
       if (timeUtil.timeBetween(q.created, v.created) < voteDuration) {
         counts[v.choiceIndex] += 1;
+        overallVotes[v.choiceIndex] += 1;
         total++;
       } else {
         late[v.choiceIndex] += 1;
+        overallVotes[v.choiceIndex] += 1;
         lateTotal++;
       }
     });
     var highest = Math.max.apply(null, counts);
     var highestLate = Math.max.apply(null, late);
+    var highestOverall = Math.max.apply(null, overallVotes);
 
     var isOpen = timeUtil.timeBetween(q.created, new Date()) < voteDuration;
 
@@ -110,7 +115,7 @@ module.exports = rust.class({
                     highest === counts[i] ? 'favored-vote-tally' : ''
                   ].join(' '),
                 style: {
-                  width: Math.floor((counts[i]) / (highest + highestLate) * 100) +'%'
+                  width: Math.floor((counts[i]) / (highestOverall) * 100) +'%'
                 }
               }
             ],
@@ -121,7 +126,7 @@ module.exports = rust.class({
                     highestLate === late[i] ? 'favored-latevote-tally' : ''
                   ].join(' '),
                 style: {
-                  width: Math.floor((late[i]) / (highest + highestLate) * 100) +'%'
+                  width: Math.floor((late[i]) / (highestOverall) * 100) +'%'
                 }
               }
             ]
