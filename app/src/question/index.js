@@ -106,24 +106,24 @@ module.exports = rust.class({
             [
               'div',
               {
-                className: [ 'vote-tally-bar',
+                className: [ 'vote-tally-bar tally-bar-style',
                     highest === counts[i] ? 'favored-vote-tally' : ''
                   ].join(' '),
                 style: {
-                  width: Math.floor((counts[i]) / (highest + highestLate) * 100) +'%',
-                  display:'inline-block'
-              }}
+                  width: Math.floor((counts[i]) / (highest + highestLate) * 100) +'%'
+                }
+              }
             ],
             [
               'div',
               {
-                className: [ 'latevote-tally-bar',
+                className: [ 'latevote-tally-bar tally-bar-style',
                     highestLate === late[i] ? 'favored-latevote-tally' : ''
                   ].join(' '),
                 style: {
-                  width: Math.floor((late[i]) / (highest + highestLate) * 100) +'%',
-                  display:'inline-block'
-              }}
+                  width: Math.floor((late[i]) / (highest + highestLate) * 100) +'%'
+                }
+              }
             ]
           ]
         ];
