@@ -5,8 +5,9 @@ var color = require('ui/color');
 module.exports = {
   display: 'block',
   'border-radius': '4px',
-  padding: '8px',
+  padding: '12px',
   margin: '8px',
+  position: 'relative',
   'background-color': color.font,
 
   a: {
