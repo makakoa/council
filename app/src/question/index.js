@@ -72,6 +72,7 @@ module.exports = rust.class({
     var highestOverall = Math.max.apply(null, overallVotes);
 
     var isOpen = timeUtil.timeBetween(q.created, new Date()) < voteDuration;
+    var timeRemainingRadians = ((this.state.remaining/voteDuration) * 2 * Math.PI);
 
     if (isOpen && !this.ticking) this.startClock();
 
@@ -134,9 +135,32 @@ module.exports = rust.class({
         ];
       })),
 
+
       this.ticking
-        ? ['div', Math.floor(this.state.remaining / 1000), 's remaining']
+        ? ['svg', {
+          width:'20',
+          height:'20',
+          viewBox:'0 0 250 250',
+          style: {
+            display:'block',
+            position:'absolute',
+            top: '7px',
+            right: '7px'
+          }
+        }, ['path', {
+          id:'border',
+          transform:'translate(125, 125)',
+          style:{ fill: '#777777' },
+          d: [
+            'M 0 0 v -125 A 125 125 1',
+            ((timeRemainingRadians > Math.PI) ? 1 : 0) + ' 1',
+            Math.sin(timeRemainingRadians) * 125,
+            Math.cos(timeRemainingRadians) * - 125 + ' z'
+          ].join(' ')
+        }]]
         : null,
+
+
 
       ['div',
        {
