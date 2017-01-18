@@ -70,7 +70,7 @@ module.exports = {
   ] : [
     new webpack.DefinePlugin({
       'process.env': JSON.stringify(_.pick(
-        $, 'NODE_ENV', 'API_URL'
+        $, 'NODE_ENV', 'API_URL', 'PUBNUB_PUBLISH', 'PUBNUB_SUBSCRIBE'
       ))
     }),
     new webpack.optimize.UglifyJsPlugin({mangle: false}),
