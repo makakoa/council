@@ -10,6 +10,9 @@ var voteActions = require('vote/actions');
 
 var voteDuration = timeUtil.second * 30;
 
+var api = require('lib/api');
+var councilToken = api.getCouncilToken();
+
 module.exports = rust.class({
   getInitialState: function() {
     return {};
@@ -48,6 +51,7 @@ module.exports = rust.class({
 
     var q = this.props.question;
 
+
     var counts = Array(q.choices.length);
     var late = Array(q.choices.length);
     var overallVotes = Array(q.choices.length);
@@ -56,7 +60,11 @@ module.exports = rust.class({
     overallVotes.fill(0);
     var total = 0;
     var lateTotal = 0;
+    var myChoice = null;
     _.each(this.props.votes, function(v) {
+      if(v.councilToken === councilToken){
+        myChoice = v.choiceIndex;
+      }
       if (timeUtil.timeBetween(q.created, v.created) < voteDuration) {
         counts[v.choiceIndex] += 1;
         overallVotes[v.choiceIndex] += 1;
@@ -79,11 +87,14 @@ module.exports = rust.class({
     var ctx = this;
     return rust.o2([
       'question',
-      {className: isOpen ? 'open' : 'closed'},
+      {className: [
+        isOpen ? 'open' : 'closed',
+        (q.councilToken === councilToken) ? 'myAsk' : 'didntAsk'
+      ].join(' ')},
 
       [Link, {
         to: '/question/' + q.id
-      }, ['h3', q.prompt]],
+      }, ['h3', q.prompt, (q.councilToken === councilToken) ? ' <-- My Question' : '']],
 
       rust.list('choices', _.map(q.choices, function(c, i) {
         return [
@@ -98,7 +109,8 @@ module.exports = rust.class({
           c,
           total ? [
             'span',
-            ' (', Math.floor(counts[i] / total * 100), '%) - ', counts[i]
+            ' (', Math.floor(counts[i] / total * 100), '%) - ', counts[i],
+            (myChoice === i) ? ' <-- My Vote' : ''
           ] : null,
           lateTotal ? [
             'div',
