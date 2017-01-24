@@ -88,13 +88,21 @@ module.exports = rust.class({
     return rust.o2([
       'question',
       {className: [
-        isOpen ? 'open' : 'closed',
-        (q.councilToken === councilToken) ? 'myAsk' : 'didntAsk'
+        isOpen ? 'open' : 'closed'/*,
+        (q.councilToken === councilToken) ? 'my-ask' : ''*/
+        //NOT WORKING? STYLES NOT FROM STYLES.JS
       ].join(' ')},
+      {style:{
+        'background-color': (q.councilToken === councilToken) ?
+         '#dadaf3' : '#fefefe'
+      }},
 
       [Link, {
         to: '/question/' + q.id
-      }, ['h3', q.prompt, (q.councilToken === councilToken) ? ' <-- My Question' : '']],
+      }, ['h3', (q.councilToken === councilToken) ?
+           'I asked the council: ' : '',
+            q.prompt
+         ]],
 
       rust.list('choices', _.map(q.choices, function(c, i) {
         return [
@@ -102,7 +110,8 @@ module.exports = rust.class({
           {
             className: [
               'choice',
-              highest === counts[i] ? 'favored' : ''
+              highest === counts[i] ? 'favored' : '',
+              (myChoice === i) ? 'my-ans' : ''
             ].join(' '),
             onClick: ctx.vote.bind(ctx, q.id, i)
           },
@@ -110,7 +119,7 @@ module.exports = rust.class({
           total ? [
             'span',
             ' (', Math.floor(counts[i] / total * 100), '%) - ', counts[i],
-            (myChoice === i) ? ' <-- My Vote' : ''
+            (myChoice === i) ? ' -- My Vote' : ''
           ] : null,
           lateTotal ? [
             'div',

@@ -61,7 +61,10 @@ module.exports = {
       opacity: 1
     }
   },
-
+  '.my-ans':{
+    'background-color': '#e3ffc3',
+    'border-radius': '4px'
+  },
   '&.closed': {
     '.choice': {
       border: 'none'
