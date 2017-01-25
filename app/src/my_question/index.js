@@ -8,20 +8,27 @@ var rust = require('rust'),
 
 var questionStore = require('question/store');
 var voteStore = require('vote/store');
+var api = require('lib/api');
 
 module.exports = rust.class({
   mixins: [questionStore.mixin, voteStore.mixin],
 
   getInitialState: function() {
+    var councilToken = api.getCouncilToken();
     return {
-      questions: questionStore.get(),
+      questions: questionStore.get().filter(function(question){
+        return question.councilToken === councilToken;
+      }),
       votesByQuestionId: voteStore.getByQuestionId()
     };
   },
 
   storeDidChange: function() {
+    var councilToken = api.getCouncilToken();
     this.setState({
-      questions: questionStore.get(),
+      questions: questionStore.get().filter(function(question){
+        return question.councilToken === councilToken;
+      }),
       votesByQuestionId: voteStore.getByQuestionId()
     });
   },
@@ -42,7 +49,7 @@ module.exports = rust.class({
       'div',
 
       [top, {
-        left: [Link, {to: '/mine'}, 'My Questions'],
+        left: [Link, {to: '/'}, ['i', {className: 'fa fa-chevron-left'}]],
         middle: ['img', {
           style: {height: '50px'},
           src: 'assets/council-light.png'

@@ -11,7 +11,6 @@ var voteActions = require('vote/actions');
 var voteDuration = timeUtil.second * 30;
 
 var api = require('lib/api');
-var councilToken = api.getCouncilToken();
 
 module.exports = rust.class({
   getInitialState: function() {
@@ -55,6 +54,7 @@ module.exports = rust.class({
     var counts = Array(q.choices.length);
     var late = Array(q.choices.length);
     var overallVotes = Array(q.choices.length);
+    var councilToken = api.getCouncilToken();
     counts.fill(0);
     late.fill(0);
     overallVotes.fill(0);
@@ -90,19 +90,17 @@ module.exports = rust.class({
       {className: [
         isOpen ? 'open' : 'closed'/*,
         (q.councilToken === councilToken) ? 'my-ask' : ''*/
-        //NOT WORKING? STYLES NOT FROM STYLES.JS
+        //NOT WORKING? STYLES NOT FROM STYLES.JS HMMM
       ].join(' ')},
       {style:{
-        'background-color': (q.councilToken === councilToken) ?
-         '#dadaf3' : '#fefefe'
+        'border': '10px dashed',
+        'border-color': (q.councilToken === councilToken) ?
+         '#ffe545' : '#fefefe'
       }},
 
       [Link, {
         to: '/question/' + q.id
-      }, ['h3', (q.councilToken === councilToken) ?
-           'I asked the council: ' : '',
-            q.prompt
-         ]],
+      }, ['h3', q.prompt]],
 
       rust.list('choices', _.map(q.choices, function(c, i) {
         return [
@@ -118,15 +116,14 @@ module.exports = rust.class({
           c,
           total ? [
             'span',
-            ' (', Math.floor(counts[i] / total * 100), '%) - ', counts[i],
-            (myChoice === i) ? ' -- My Vote' : ''
+            ' (', Math.floor(counts[i] / total * 100), '%) '
           ] : null,
           lateTotal ? [
             'div',
             {style: {fontSize: '12px'}},
-            ' + ', late[i], ' late (',
-            Math.floor((counts[i] + late[i]) / (total + lateTotal) * 100),
-            '% overall)'
+            late[i] ? ' + late (' +
+            Math.floor((counts[i] + late[i]) / (total + lateTotal) * 100) +
+            '% overall)' : ' '
           ] : null,
           [
             'div',

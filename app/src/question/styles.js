@@ -62,7 +62,7 @@ module.exports = {
     }
   },
   '.my-ans':{
-    'background-color': '#e3ffc3',
+    'background-color': '#ffecba',
     'border-radius': '4px'
   },
   '&.closed': {

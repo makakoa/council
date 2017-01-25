@@ -47,6 +47,9 @@ ReactDOM.render(
       childRoutes: [{
         path: '/ask',
         component: require('ask')
+      },{
+        path: '/mine',
+        component: require('my_question')
       }, {
         path: '/question/:id',
         component: require('question/page')
