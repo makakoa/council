@@ -50,10 +50,7 @@ module.exports = rust.class({
 
       [top, {
         left: [Link, {to: '/'}, ['i', {className: 'fa fa-chevron-left'}]],
-        middle: ['img', {
-          style: {height: '50px'},
-          src: 'assets/council-light.png'
-        }],
+        middle: ['h1', 'My Questions'],
         right: [Link, {to: '/ask'}, 'Ask']
       }],
 
