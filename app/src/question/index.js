@@ -10,6 +10,8 @@ var voteActions = require('vote/actions');
 
 var voteDuration = timeUtil.second * 30;
 
+var api = require('lib/api');
+
 module.exports = rust.class({
   getInitialState: function() {
     return {};
@@ -48,15 +50,21 @@ module.exports = rust.class({
 
     var q = this.props.question;
 
+
     var counts = Array(q.choices.length);
     var late = Array(q.choices.length);
     var overallVotes = Array(q.choices.length);
+    var councilToken = api.getCouncilToken();
     counts.fill(0);
     late.fill(0);
     overallVotes.fill(0);
     var total = 0;
     var lateTotal = 0;
+    var myChoice = null;
     _.each(this.props.votes, function(v) {
+      if(v.councilToken === councilToken){
+        myChoice = v.choiceIndex;
+      }
       if (timeUtil.timeBetween(q.created, v.created) < voteDuration) {
         counts[v.choiceIndex] += 1;
         overallVotes[v.choiceIndex] += 1;
@@ -79,11 +87,14 @@ module.exports = rust.class({
     var ctx = this;
     return rust.o2([
       'question',
-      {className: isOpen ? 'open' : 'closed'},
-
+      {className: [
+        isOpen ? 'open' : 'closed',
+        (q.councilToken === councilToken) ? 'home-mine' : '',
+        this.props.class
+      ].join(' ')},
       [Link, {
         to: '/question/' + q.id
-      }, ['h3', q.prompt]],
+      }, ['h3', {className:(q.councilToken === councilToken) ? 'my-prompt' : ''}, q.prompt]],
 
       rust.list('choices', _.map(q.choices, function(c, i) {
         return [
@@ -91,21 +102,22 @@ module.exports = rust.class({
           {
             className: [
               'choice',
-              highest === counts[i] ? 'favored' : ''
+              highest === counts[i] ? 'favored' : '',
+              (myChoice === i) ? 'my-ans' : ''
             ].join(' '),
             onClick: ctx.vote.bind(ctx, q.id, i)
           },
           c,
           total ? [
             'span',
-            ' (', Math.floor(counts[i] / total * 100), '%) - ', counts[i]
+            ' (', Math.floor(counts[i] / total * 100), '%) '
           ] : null,
           lateTotal ? [
             'div',
             {style: {fontSize: '12px'}},
-            ' + ', late[i], ' late (',
-            Math.floor((counts[i] + late[i]) / (total + lateTotal) * 100),
-            '% overall)'
+            late[i] ? ' + late (' +
+            Math.floor((counts[i] + late[i]) / (total + lateTotal) * 100) +
+            '% overall)' : ' '
           ] : null,
           [
             'div',
