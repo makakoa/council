@@ -31,7 +31,8 @@ module.exports = rust.class({
 
     return [question, {
       question: q,
-      votes: votes
+      votes: votes,
+      class: 'home-question'
     }];
   },
 

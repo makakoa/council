@@ -5,7 +5,7 @@ var color = require('ui/color');
 module.exports = {
   display: 'block',
   'border-radius': '4px',
-  padding: '12px',
+  padding: '15px',
   margin: '8px',
   position: 'relative',
   'background-color': color.font,
@@ -68,6 +68,18 @@ module.exports = {
   '&.closed': {
     '.choice': {
       border: 'none'
+    },
+    '&.home-mine.home-question>a>h3.my-prompt:before':{
+      'content': '""',
+      'border-color': 'transparent #656b6d',
+      'border-style': 'solid',
+      'border-width': '5px 0 5px 8px',
+      'display': 'block',
+      'height': '0',
+      'width': '0',
+      'left': '-10px',
+      'top':'18px',
+      'position': 'relative'
     }
   }
 };

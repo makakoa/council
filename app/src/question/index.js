@@ -88,19 +88,13 @@ module.exports = rust.class({
     return rust.o2([
       'question',
       {className: [
-        isOpen ? 'open' : 'closed'/*,
-        (q.councilToken === councilToken) ? 'my-ask' : ''*/
-        //NOT WORKING? STYLES NOT FROM STYLES.JS HMMM
+        isOpen ? 'open' : 'closed',
+        (q.councilToken === councilToken) ? 'home-mine' : '',
+        this.props.class
       ].join(' ')},
-      {style:{
-        'border': '10px dashed',
-        'border-color': (q.councilToken === councilToken) ?
-         '#ffe545' : '#fefefe'
-      }},
-
       [Link, {
         to: '/question/' + q.id
-      }, ['h3', q.prompt]],
+      }, ['h3', {className:(q.councilToken === councilToken) ? 'my-prompt' : ''}, q.prompt]],
 
       rust.list('choices', _.map(q.choices, function(c, i) {
         return [
