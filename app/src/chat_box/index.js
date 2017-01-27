@@ -1,16 +1,25 @@
 'use strict';
 
 var rust = require('rust'),
-    _ = require('lodash'),
-    Link = require('react-router').Link;
+    _ = require('lodash');
 
 var chatActions = require('chat_box/actions');
+var messageStore = require('chat_box/store');
 
 module.exports = rust.class({
+  mixins: [messageStore.mixin],
+
   getInitialState: function() {
     return {
-      message: ''
+      message: '',
+      chatMsgs: messageStore.get()
     };
+  },
+
+  storeDidChange: function() {
+    this.setState({
+      chatMsgs: messageStore.get()
+    });
   },
 
   onInput: function(e) {
@@ -20,7 +29,7 @@ module.exports = rust.class({
 
   onSubmit: function(e) {
     e.preventDefault();
-    console.log('value', this.state.message);
+    console.log('chatMessage:', this.state.message);
 
     if (!this.state.message) {
       alert('need message');
@@ -33,16 +42,15 @@ module.exports = rust.class({
   },
 
   render: function() {
-
-    var ctx = this;
+    console.log('DIS DA CHETBOX: ',this.state.chatMsgs);
 
     return rust.o2([
       'div',
       {id: 'chatbox'},
 
-      // rust.list('chatMessages',
-      // _.map(_.sortBy(this.state.message, 'created').reverse(),
-      // 'li'))
+      ['ul', rust.list('chatMessages',
+      _.map(_.sortBy(this.state.chatMsgs, 'created'), 'body'))
+      ],
 
       ['br'],
 

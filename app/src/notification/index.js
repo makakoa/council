@@ -35,6 +35,7 @@ function listenForNotifications() {
 
 var questionActions = require('question/actions');
 var voteActions = require('vote/actions');
+var chatActions = require('chat_box/actions');
 
 function handleNotification(payload) {
   console.log('Notification received ', payload);
@@ -45,6 +46,10 @@ function handleNotification(payload) {
   case 'NEW_QUESTION':
     notify('New question!');
     questionActions.addQuestion(message.data);
+    break;
+
+  case 'NEW_MESSAGE':
+    chatActions.addMessage(message.data);
     break;
 
   case 'NEW_VOTE':

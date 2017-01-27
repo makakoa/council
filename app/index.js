@@ -18,8 +18,10 @@ if (!api.hasToken()) {
 
 var questionActions = require('question/actions');
 var voteActions = require('vote/actions');
+var chatActions = require('chat_box/actions');
 notification.listenForNotifications();
 questionActions.loadQuestions();
+chatActions.loadMessages();
 voteActions.loadVotes();
 
 

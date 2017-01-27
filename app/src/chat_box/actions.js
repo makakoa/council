@@ -1,16 +1,11 @@
 'use strict';
 
 var Flux = require('lib/flux'),
-    hist = require('lib/history'),
     api = require('lib/api');
 
 module.exports = Flux.createActions({
   chat: function(chat) {
     var call = api.post('/chat', chat);
-
-    call.tap(function(newChatMsg) {
-      hist.push('/chat/' + newChatMsg.id);
-    });
 
     return {
       actionType: 'SEND_MESSAGE',

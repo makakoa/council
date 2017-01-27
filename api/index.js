@@ -11,7 +11,8 @@ var db = require('db')(config.db);
 
 var store = {
   question: db.store('question.question'),
-  vote: db.store('question.vote')
+  vote: db.store('question.vote'),
+  message: db.store('chat.message')
 };
 
 var bodyParser = require('body-parser');
@@ -94,9 +95,9 @@ app.get('/question', function(req, res) {
   });
 });
 
-app.post('/message', function(req, res) {
+app.post('/chat', function(req, res) {
   store.message.insert({
-    message: req.body.message,
+    body: req.body.message,
     councilToken: req.headers['council-token']
   }).then(function(newMessage) {
     res.send(newMessage);
@@ -107,9 +108,9 @@ app.post('/message', function(req, res) {
   });
 });
 
-app.get('/question', function(req, res) {
+app.get('/chat', function(req, res) {
   req;
-  store.question.find().then(function(message) {
+  store.message.find().then(function(message) {
     res.send(message);
   });
 });

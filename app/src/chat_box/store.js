@@ -12,6 +12,7 @@ var store = Flux.createStore({
   },
 
   get: function() {
+    console.log('CHATBOX STORE CACHE:', store.cache);
     return store.cache;
   },
 

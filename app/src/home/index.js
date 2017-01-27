@@ -5,10 +5,12 @@ var rust = require('rust'),
     top = require('top'),
     mid = require('mid'),
     question = require('question'),
+    chatbox = require('chat_box'),
     Link = require('react-router').Link;
 
 var questionStore = require('question/store');
 var voteStore = require('vote/store');
+
 
 module.exports = rust.class({
   mixins: [questionStore.mixin, voteStore.mixin],
@@ -39,7 +41,6 @@ module.exports = rust.class({
 
   render: function() {
 
-
     return rust.o2([
       'div',
 
@@ -51,8 +52,8 @@ module.exports = rust.class({
         }],
         right: [Link, {to: '/ask'}, 'Ask']
       }],
-      [mid,{
-        left: 'CHATBOX HERE',
+      [mid, {
+        left: [chatbox],
         middle: rust.list('questions',
       _.map(_.sortBy(this.state.questions, 'created').reverse(),
       this.questionItem))

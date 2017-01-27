@@ -9,3 +9,7 @@ api:
 .PHONY: styler
 styler:
 	./scripts/start_styler.sh
+
+.PHONY: db-reset
+db-reset:
+	cd api/db && ./fresh
