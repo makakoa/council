@@ -76,6 +76,17 @@ module.exports = {
     }
   },
 
+  //mid styles
+  '#mid': {
+    display: 'flex',
+    'justify-content': 'space-between',
+    'align-items': 'center',
+    'left, right': {
+      'text-align': 'center',
+      width: '100px'
+    }
+  },
+
   '.LEFT-enter': {
     transform: 'translateX(100vw)',
     transition: pageTransition

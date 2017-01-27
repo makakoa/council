@@ -94,6 +94,26 @@ app.get('/question', function(req, res) {
   });
 });
 
+app.post('/message', function(req, res) {
+  store.message.insert({
+    message: req.body.message,
+    councilToken: req.headers['council-token']
+  }).then(function(newMessage) {
+    res.send(newMessage);
+    pubsub.publish('/all', {
+      message: 'NEW_MESSAGE',
+      data: newMessage
+    });
+  });
+});
+
+app.get('/question', function(req, res) {
+  req;
+  store.question.find().then(function(message) {
+    res.send(message);
+  });
+});
+
 app.get('/vote', function(req, res) {
   req;
   store.vote.find().then(function(votes) {

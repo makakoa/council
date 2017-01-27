@@ -3,6 +3,7 @@
 var rust = require('rust'),
     _ = require('lodash'),
     top = require('top'),
+    mid = require('mid'),
     question = require('question'),
     Link = require('react-router').Link;
 
@@ -50,10 +51,12 @@ module.exports = rust.class({
         }],
         right: [Link, {to: '/ask'}, 'Ask']
       }],
-
-      rust.list('questions',
+      [mid,{
+        left: 'CHATBOX HERE',
+        middle: rust.list('questions',
       _.map(_.sortBy(this.state.questions, 'created').reverse(),
       this.questionItem))
+      }]
     ]);
   }
 });
